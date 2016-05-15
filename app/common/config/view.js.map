@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/common/config/view.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;kBAIe;AACb,QAAM,MADO;AAEb,gBAAc,WAFD;AAGb,YAAU,OAHG;AAIb,aAAW,GAJE;AAKb,aAAW,MAAM,SAAN,GAAkB,OALhB;AAMb,WAAS;AACP,SAAK;AADE;AANI,C",
+    "file": "../../../src/common/config/view.js",
+    "sourcesContent": [
+        "'use strict';\n/**\n * template config\n */\nexport default {\n  type: 'jade',\n  content_type: 'text/html',\n  file_ext: '.jade',\n  file_depr: '_',\n  root_path: think.ROOT_PATH + '/view',\n  adapter: {\n    ejs: {}\n  }\n};"
+    ]
+}
