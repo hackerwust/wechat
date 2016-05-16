@@ -6,9 +6,17 @@ html
     meta(name='description', content='')
     meta(name='keywords', content='')
     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
-    title 一点资讯 - WeChat
+    title 聊天室 - WeChat
     meta(name='renderer', content='webkit')
     meta(http-equiv='Cache-Control', content='no-siteapp')
     meta(name='mobile-web-app-capable', content='yes')
+    link(rel="stylesheet", href="/static/modules/common/bootstrap/css/bootstrap.min.css", type="text/css")
+    link(rel="stylesheet", href="/chat/compiler/index?type=stylus&path=modules|home|src|index.styl", type="text/css")
+
   body
     h5 这是首页
+    
+    
+    script(src="/static/modules/common/require.js", data-main="/chat/compiler/index?type=coffee&path=modules|home|src|index.coffee")
+      
+    script(src="/chat/compiler/index?type=coffee&path=modules|common|common.coffee")

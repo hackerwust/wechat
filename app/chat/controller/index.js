@@ -20,6 +20,8 @@ var _base2 = _interopRequireDefault(_base);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var fs = require("fs");
+
 var _class = function (_Base) {
   (0, _inherits3.default)(_class, _Base);
 
@@ -28,13 +30,17 @@ var _class = function (_Base) {
     return (0, _possibleConstructorReturn3.default)(this, _Base.apply(this, arguments));
   }
 
-  /**
-   * index action
-   * @return {Promise} []
-   */
+  _class.prototype.init = function init() {
+    var _Base$prototype$init;
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    (_Base$prototype$init = _Base.prototype.init).call.apply(_Base$prototype$init, [this].concat(args));
+  };
 
   _class.prototype.indexAction = function indexAction() {
-    //auto render template file index_index.html
     return this.display();
   };
 
