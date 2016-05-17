@@ -1,6 +1,7 @@
 
-Application created by [ThinkJS](http://www.thinkjs.org)
 
+Application created by [ThinkJS](http://www.thinkjs.org)
+s
 ## Install dependencies
 
 ```
