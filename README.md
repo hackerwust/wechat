@@ -1,16 +1,10 @@
-women is test
-
-
 
 Application created by [ThinkJS](http://www.thinkjs.org)
-s
 ## Install dependencies
 
 ```
 npm install
 ```
-
-## Start server
 
 ```
 npm start
