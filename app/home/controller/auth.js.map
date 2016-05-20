@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/home/controller/auth.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;AAEA;;;;;;;;;;;;;;mBAGE,I,mBAAc;AAAA;;AAAA,sCAAN,IAAM;AAAN,UAAM;AAAA;;AACZ,4CAAM,IAAN,iDAAc,IAAd;AACA,QAAI,SAAS,KAAK,KAAL,CAAW,MAAX,CAAb;AACA,QAAI,WAAW,KAAK,KAAL,CAAW,UAAX,CAAf;AACD,G;;mBAED,a,4BAAgB;AACd,QAAI,OAAO,KAAK,IAAhB;AACA,QAAI,MAAM,KAAK,OAAL,CAAa,GAAb,IAAoB,EAA9B;AACA,QAAI,CAAC,GAAL,EAAU;AACR,aAAO,KAAK,IAAL,CAAU,EAAC,QAAQ,QAAT,EAAmB,QAAQ,oBAA3B,EAAV,CAAP;AACD;AACF,G",
+    "file": "../../../src/home/controller/auth.js",
+    "sourcesContent": [
+        "'use strict';\n\nimport Base from './base.js';\n\nexport default class extends Base {\n  init(...args) {\n    super.init(...args);\n    var wechat = this.model('user');\n    var auto_inc = this.model('auto_inc');\n  }\n\n  getinfoAction() {\n    var http = self.http;\n    var uid = http._cookie.uid || \"\";\n    if (!uid) {\n      return http.json({status: \"failed\", reason: \"the token is empty\"});\n    }\n  }\n  \n}"
+    ]
+}

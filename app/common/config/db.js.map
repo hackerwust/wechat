@@ -4,9 +4,9 @@
         "../../../src/common/config/db.js"
     ],
     "names": [],
-    "mappings": "AAAA;;;;;;;kBAKe;AACb,QAAM,OADO;AAEb,WAAS;AACP,WAAO;AACL,YAAM,WADD;AAEL,YAAM,EAFD;AAGL,gBAAU,EAHL;AAIL,YAAM,EAJD;AAKL,gBAAU,EALL;AAML,cAAQ,QANH;AAOL,gBAAU;AAPL,KADA;AAUP,WAAO;AAVA;AAFI,C",
+    "mappings": "AAAA;;;;;;;kBAKe;AACb,QAAM,OADO;AAEb,WAAS;AACP,WAAO;AACL,YAAM,WADD;AAEL,YAAM,OAFD;AAGL,gBAAU,QAHL;AAIL,YAAM,EAJD;AAKL,gBAAU,EALL;AAML,cAAQ,EANH;AAOL,gBAAU;AAPL,KADA;AAUP,WAAO;AACL,YAAM,WADD;AAEL,YAAM,OAFD;AAGL,gBAAU,QAHL;AAIL,YAAM,EAJD;AAKL,gBAAU,EALL;AAML,cAAQ,EANH;AAOL,gBAAU;AAPL;AAVA;AAFI,C",
     "file": "../../../src/common/config/db.js",
     "sourcesContent": [
-        "'use strict';\n/**\n * db config\n * @type {Object}\n */\nexport default {\n  type: 'mysql',\n  adapter: {\n    mysql: {\n      host: '127.0.0.1',\n      port: '',\n      database: '',\n      user: '',\n      password: '',\n      prefix: 'think_',\n      encoding: 'utf8'\n    },\n    mongo: {\n\n    }\n  }\n};"
+        "'use strict';\n/**\n * db config\n * @type {Object}\n */\nexport default {\n  type: 'mongo',\n  adapter: {\n    mysql: {\n      host: '127.0.0.1',\n      port: '27017',\n      database: 'wechat',\n      user: '',\n      password: '',\n      prefix: '',\n      encoding: 'utf8'\n    },\n    mongo: {\n      host: '127.0.0.1',\n      port: '27017',\n      database: 'wechat',\n      user: '',\n      password: '',\n      prefix: '',\n      encoding: 'utf8'\n    }\n  }\n};"
     ]
 }

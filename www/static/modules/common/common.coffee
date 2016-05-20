@@ -5,9 +5,10 @@ require.config
     jade: "common/jade"
     bootstrap: "common/bootstrap/js/bootstrap.min"
     jade_runtime: "common/jade_runtime"
+    socket: "common/socket.io"
   shim:
     jade: 
       exports: "jade"
-    boostrap: 
+    bootstrap: 
       exports: "bootstrap"
       deps: ['jquery']

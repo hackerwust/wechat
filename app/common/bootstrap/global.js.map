@@ -1,7 +1,12 @@
 {
     "version": 3,
-    "sources": [],
+    "sources": [
+        "../../../src/common/bootstrap/global.js"
+    ],
     "names": [],
-    "mappings": "",
-    "sourcesContent": []
+    "mappings": ";;;;;;;;;;;;;;AAYA,IAAI,SAAS,QAAQ,QAAR,CAAb;AACA,IAAI,KAAK,QAAQ,IAAR,CAAT;;AAEA,OAAO,OAAP,GAAiB,UAAS,IAAT,EAAe,IAAf,EAAsC;AAAA,MAAjB,IAAiB,yDAAV,QAAU;;AACrD,SAAO,OAAO,IAAP,KAAgB,QAAhB,GAA2B,IAA3B,GAAkC,KAAK,QAAL,EAAzC;AACA,SAAO,OAAO,IAAP,KAAgB,QAAhB,GAA2B,IAA3B,GAAkC,KAAK,QAAL,EAAzC;AACA,MAAI,OAAO,IAAX,EAAiB;AAAA,eACA,CAAC,IAAD,EAAO,IAAP,CADA;AACd,QADc;AACR,QADQ;AAEhB;AACD,MAAI,OAAO,OAAO,UAAP,CAAkB,MAAlB,CAAX;AACA,OAAK,MAAL,CAAY,IAAZ;AACA,OAAK,MAAL,CAAY,IAAZ;AACA,SAAO,KAAK,MAAL,CAAY,IAAZ,CAAP;AACD,CAVD",
+    "file": "../../../src/common/bootstrap/global.js",
+    "sourcesContent": [
+        "/**\n * this file will be loaded before server started\n * you can define global functions used in controllers, models, templates\n */\n\n/**\n * use global.xxx to define global functions\n * \n * global.fn1 = function(){\n *     \n * }\n */\nvar crypto = require(\"crypto\");\nvar fs = require(\"fs\");\n\nglobal.encrypt = function(str1, str2, type = \"base64\") {\n  str1 = typeof str1 === \"string\" ? str1 : str1.toString();\n  str2 = typeof str2 === \"string\" ? str2 : str2.toString();\n  if (str1 > str2) {\n    [str1, str2] = [str2, str1];\n  }\n  var sha1 = crypto.createHash(\"sha1\");\n  sha1.update(str1);\n  sha2.update(str2);\n  return sha1.digest(type);\n};"
+    ]
 }

@@ -10,13 +10,34 @@ html
     meta(name='renderer', content='webkit')
     meta(http-equiv='Cache-Control', content='no-siteapp')
     meta(name='mobile-web-app-capable', content='yes')
-    link(rel="stylesheet", href="/static/modules/common/bootstrap/css/bootstrap.min.css", type="text/css")
+    //- link(rel="stylesheet", href="/static/modules/common/bootstrap/css/bootstrap.min.css", type="text/css")
     link(rel="stylesheet", href="/chat/compiler/index?type=stylus&path=modules|home|src|index.styl", type="text/css")
 
   body
-    h5 这是首页
-    
-    
+
+    .container
+      .login-wrap 
+        img.user-photo(src = '/static/tmp/photo/default.jpg')
+        form.info-wrap 
+          .id-wrap
+            i.icon
+            input.id(type='text', placeholder="输入账号", autofocus)
+          .pass-wrap
+            i.icon
+            input.pass(type='password', placeholder="输入密码", maxlength="12")
+          a.to-register(href="javascript:void(0)") Sign In
+          .login-btn
+          .msg 
+      .register-wrap
+        form.info-wrap
+          input.name(type='text', placeholder="输入昵称", autofocus, maxlength="16") 
+          input.pass.pass-control(type='text', placeholder="输入密码", maxlength="12")
+          input.confirm-pass.pass-control(type='text', placeholder="确认密码", maxlength="12")
+          .operate
+            .btn.submit Submit
+            .btn.to-login to Login
+          .msg 
+
     script(src="/static/modules/common/require.js", data-main="/chat/compiler/index?type=coffee&path=modules|home|src|index.coffee")
       
     script(src="/chat/compiler/index?type=coffee&path=modules|common|common.coffee")
