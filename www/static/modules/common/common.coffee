@@ -6,6 +6,7 @@ require.config
     bootstrap: "common/bootstrap/js/bootstrap.min"
     jade_runtime: "common/jade_runtime"
     socket: "common/socket.io"
+    text: 'common/text.min'
   shim:
     jade: 
       exports: "jade"

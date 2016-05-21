@@ -50,13 +50,24 @@ var _class = function (_Base) {
 
   _class.prototype.indexAction = function () {
     var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+      var uid;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              uid = parseInt(this.cookie("uid"), 10) || 0;
+
+              if (!uid) {
+                _context.next = 3;
+                break;
+              }
+
+              return _context.abrupt('return', this.redirect("/chat/index/index"));
+
+            case 3:
               return _context.abrupt('return', this.display());
 
-            case 1:
+            case 4:
             case 'end':
               return _context.stop();
           }
@@ -134,30 +145,29 @@ var _class = function (_Base) {
               id = parseInt(http.post("id"), 10) || 0;
               pass = http.post("pass");
 
-              console.log(http._post);
-
               if (!(!id || !pass)) {
-                _context3.next = 6;
+                _context3.next = 5;
                 break;
               }
 
               return _context3.abrupt('return', http.json({ status: 'failed', reason: "用户名或者密码为空" }));
 
-            case 6:
-              _context3.next = 8;
-              return self.uinfo.where({ _id: id, pass: pass }).find();
+            case 5:
+              _context3.next = 7;
+              return self.user.where({ _id: id, pass: pass }).find();
 
-            case 8:
+            case 7:
               uinfo = _context3.sent;
 
               if (!(think.isEmpty(uinfo) || uinfo._id != id)) {
-                _context3.next = 11;
+                _context3.next = 10;
                 break;
               }
 
               return _context3.abrupt('return', http.json({ status: 'failed', reason: "未匹配到用户" }));
 
-            case 11:
+            case 10:
+              this.cookie("uid", uinfo._id);
               return _context3.abrupt('return', http.json({ status: "success", info: uinfo }));
 
             case 12:

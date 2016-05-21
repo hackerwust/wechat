@@ -4,9 +4,9 @@
         "../../../src/common/config/websocket.js"
     ],
     "names": [],
-    "mappings": ";;;kBAAe;AACb,MAAI,IADS,E;AAEb,QAAM,WAFO;AAGb,gBAAc,EAHD;AAIb,gBAAc,EAJD;AAKb,WAAS,SALI;AAMb,QAAM,EANO,E;AAOb,YAAU;AACR,YAAQ,oBADA;AAER,aAAS;AAFD;;;;;;;;;AAPG,C",
+    "mappings": ";;;kBAAe;AACb,MAAI,IADS,E;AAEb,QAAM,WAFO;AAGb,gBAAc,EAHD;AAIb,gBAAc,EAJD;AAKb,WAAS,SALI;AAMb,QAAM,EANO,E;AAOb,YAAU;AACR,YAAQ,oBADA;AAER,kBAAc,kBAFN;AAGR,eAAW;AAHH;AAPG,C",
     "file": "../../../src/common/config/websocket.js",
     "sourcesContent": [
-        "export default {\n  on: true, //是否开启 WebSocket\n  type: \"socket.io\",\n  allow_origin: \"\",\n  sub_protocal: \"\",\n  adapter: undefined,\n  path: \"\", //url path for websocket\n  messages: {\n    \"open\": \"chat/index/connect\",\n    \"close\": \"chat/index/close\"\n  }\n  // messages: {\n  //   open: 'home/index/open',\n  //   close: 'home/index/close',\n  //   chat: 'home/index/chat',\n  //   typing: 'home/index/typing',\n  //   stoptyping: 'home/index/stoptyping',\n  //   adduser: 'home/index/adduser'\n  // }\n};"
+        "export default {\n  on: true, //是否开启 WebSocket\n  type: \"socket.io\",\n  allow_origin: \"\",\n  sub_protocal: \"\",\n  adapter: undefined,\n  path: \"\", //url path for websocket\n  messages: {\n    \"open\": \"chat/index/connect\",\n    \"disconnect\": \"chat/index/close\",\n    \"sendmsg\": \"chat/index/getmsg\"\n  }\n};"
     ]
 }

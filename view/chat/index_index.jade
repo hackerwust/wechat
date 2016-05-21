@@ -6,9 +6,48 @@ html
     meta(name='description', content='')
     meta(name='keywords', content='')
     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
-    title 一点资讯 - WeChat
+    title 聊天室 - WeChat
     meta(name='renderer', content='webkit')
     meta(http-equiv='Cache-Control', content='no-siteapp')
     meta(name='mobile-web-app-capable', content='yes')
+    link(rel="stylesheet", href="/chat/compiler/index?type=stylus&path=modules|chat|src|index.styl", type="text/css")
+
   body
-    h5 这是首页
+    .container
+      .self-info-wrap(uid = self._id) 
+        img.photo(src =self.photo?self.photo:'/static/tmp/photo/default.jpg')
+        span.name #{self.name}
+        a.btn.logout(href='/chat/index/dologout') 退出
+      .friend-list-wrap
+        nav.friend-nav 好友列表
+        .friends-wrap
+          .group.item.active(uid = "group")
+            img.photo(src='/static/tmp/photo/group.png')
+            span.name 计科1202班
+            span.log-num.hide 0
+          if friends && friends.length
+            each friend in friends
+              .friend.item(uid = friend._id)
+                img.photo(src= friend.photo?friend.photo:'/static/tmp/photo/default.jpg')
+                section.name-and-status
+                  span.name #{friend.name}
+                  - var cls = friend.online == "on" ? "status" : "status offline"
+                  i(class = cls) 
+                span.log-num.hide 0
+
+      .chat-window
+        .chat-log-wrap
+          if logs && logs.length
+            each log in logs
+              - var cls = log.uid == self._id ? "item self" : "item other"
+              div(class = cls)
+                span.time #{log.time || ""}
+                .log.clearfix
+                  img.photo(src= log.photo || '/static/tmp/photo/default.jpg')
+                  p.content #{log.content}
+
+        textarea.type-write-wrap(wrap="hard")
+
+    script(src="/static/modules/common/require.js", data-main="/chat/compiler/index?type=coffee&path=modules|chat|src|index.coffee")
+      
+    script(src="/chat/compiler/index?type=coffee&path=modules|common|common.coffee")

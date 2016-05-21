@@ -10,15 +10,8 @@ exports.default = {
   path: "", //url path for websocket
   messages: {
     "open": "chat/index/connect",
-    "close": "chat/index/close"
+    "disconnect": "chat/index/close",
+    "sendmsg": "chat/index/getmsg"
   }
-  // messages: {
-  //   open: 'home/index/open',
-  //   close: 'home/index/close',
-  //   chat: 'home/index/chat',
-  //   typing: 'home/index/typing',
-  //   stoptyping: 'home/index/stoptyping',
-  //   adduser: 'home/index/adduser'
-  // }
 };
 //# sourceMappingURL=websocket.js.map

@@ -10,6 +10,10 @@ export default class extends Base {
   }
 
   async indexAction() {
+    var uid = parseInt(this.cookie("uid"), 10) || 0;
+    if (uid) {
+      return this.redirect("/chat/index/index");
+    }
     return this.display();
   }
   
@@ -35,14 +39,14 @@ export default class extends Base {
     var http = self.http;
     var id = parseInt(http.post("id"), 10) || 0;
     var pass = http.post("pass");
-    console.log(http._post);
     if (!id || !pass) {
       return http.json({status: 'failed', reason: "用户名或者密码为空"});
     }
-    var uinfo = await self.uinfo.where({_id: id, pass}).find();
+    var uinfo = await self.user.where({_id: id, pass}).find();
     if (think.isEmpty(uinfo) || uinfo._id != id) {
       return http.json({status: 'failed', reason: "未匹配到用户"});
     }
+    this.cookie("uid", uinfo._id);
     return http.json({status: "success", info: uinfo});
   }
 

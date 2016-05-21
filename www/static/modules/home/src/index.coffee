@@ -22,7 +22,6 @@ define [
           self.val(self.val().replace(/[\u4e00-\u9fa5]/g,''))
         0)
         return self
-
     throttle = (fn, speed)->
       speed = speed || 200
       timer = null
@@ -95,5 +94,12 @@ define [
           item[0].focus()
           return msg.text("#{key}不能为空")
       $.post("/home/index/dologin", {id: $.trim(id.val()), pass: $.trim(pass.val())}).always (o)->
-        if o && o.status == "failed" then msg.text("登录失败") else msg.text("登录成功")
+        if o && o.status == "failed" 
+          msg.text("登录失败")
+        else 
+          msg.text("登录成功")
+          setTimeout(()->
+            window.location.href = "/chat/index/index"
+          1000)
+
 
