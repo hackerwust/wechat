@@ -21,7 +21,7 @@ define [
         num = parseInt(log_num.text() || 10) || 0
         num = num + 1
         if num > 99 then num = "99+"
-        log_num.text(++num).addClass("shake")
+        log_num.text(num).addClass("shake")
         return $(this)
       resetForm: ()->
         photo = $(this).find(".photo")
