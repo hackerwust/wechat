@@ -1,8 +1,7 @@
 define [
   'jquery'
-  'bootstrap'
   'jade'
-  ], ($, bs, jade) -> 
+  ], ($, jade) -> 
     login_wrap = $(".login-wrap")
     register_wrap = $(".register-wrap")
     

@@ -1,16 +1,10 @@
-# four type
- # single
- # group
- # online
- # offline
 define [
   'jquery'
-  'bootstrap'
   'jade'
   'socket'
   'text!chat/tpl/chat-log-item.jade'
   'text!chat/tpl/friend-item.jade'
-  ], ($, bs, jade, socket, chat_log_item_tpl, friend_item_tpl) -> 
+  ], ($, jade, socket, chat_log_item_tpl, friend_item_tpl) -> 
     
     $.fn.extend
       scrollToLast: ()->
