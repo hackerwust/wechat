@@ -30,10 +30,24 @@ export default class extends Base {
       }
     });
     var logs = await getlog("group", "");
+    await self.addPhoto(logs);
     self.assign({self: uinfo, friends, logs});
     return this.display();
   }
-  
+
+  async addPhoto(logs) {
+    var self = this;
+    var photo_hash = new Map();
+    for (var i = 0, len = logs.length; i < len; i++) {
+      var uid = logs[i].uid;
+      if (!photo_hash.has(uid)) {
+        var info = await self.user.where({_id: uid}).find();
+        photo_hash.set(uid, info);
+      }
+      logs[i].photo = photo_hash.get(uid).photo;
+    }
+  }
+
   async dologoutAction(self) {
     this.cookie("uid", null);
     return this.redirect("/home/index/index");
@@ -134,15 +148,7 @@ export default class extends Base {
     var other_id = http.post("other");
     // other_id 在前， 可能是group
     var logs = await getlog(other_id, uid);
-    var photo_hash = new Map();
-    for (var i = 0, len = logs.length; i < len; i++) {
-      var uid = logs[i].uid;
-      if (!photo_hash.has(uid)) {
-        var info = await self.user.where({_id: uid}).find();
-        photo_hash.set(uid, info);
-      }
-      logs[i].photo = photo_hash.get(uid).photo;
-    }
+    await self.addPhoto(logs);
     return http.json({status: "success", data: logs});
   }
   

@@ -1,5 +1,5 @@
 node_modules
 */runtime/*
 */.DS_Store
-www/static
+www/static/tmp
 runtime/

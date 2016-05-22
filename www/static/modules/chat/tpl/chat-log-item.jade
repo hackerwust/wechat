@@ -1,0 +1,5 @@
+div(class = self ? "item self" : "item other")
+  span.time #{time || ""}
+  .log.clearfix
+    img.photo(src= photo ? photo : '/static/tmp/photo/default.jpg')
+    p.content #{content || ""}

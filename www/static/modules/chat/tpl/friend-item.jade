@@ -1,0 +1,7 @@
+.friend.item(uid = _id)
+  img.photo(src= photo?photo:'/static/tmp/photo/default.jpg')
+  section.name-and-status
+    span.name #{name}
+    - var cls = online == "on" ? "status" : "status offline"
+    i(class = cls) 
+  span.log-num.hide 0
