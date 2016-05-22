@@ -118,11 +118,10 @@ define [
     getFriendActive = ()->
       active = friends_wrap.find(".active")
       if active.length then return active else return null
-
-    socket = socket("http://dev.chat.com:5556")
-
-    socket.on "disconnect", (e)-> 
-      window.location.href= "/chat/index/dologout"
+    
+    host = window.location.host # 包括端口
+    hostname = window.location.hostname # 不包括端口
+    socket = socket(host)
     
     socket.on "online", (data)->
       if data && data.uinfo && data.uinfo._id && data.uinfo._id!= uid
