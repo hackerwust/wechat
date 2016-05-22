@@ -107,7 +107,7 @@ define [
           return msg.text("#{key}不能为空")
       $.post("/home/index/dologin", {id: $.trim(id.val()), pass: $.trim(pass.val())}).always (o)->
         if o && o.status == "failed" 
-          msg.text("登录失败")
+          msg.text("账号或者密码错误")
         else 
           msg.text("登录成功")
           setTimeout(()->

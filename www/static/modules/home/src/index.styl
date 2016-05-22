@@ -5,8 +5,10 @@
 html
 body 
   height 100%
-  background-image url("/static/images/home/bg.png")
-  background-repeat repeat
+  // background-image url("/static/images/home/bg.png")
+  // background-repeat repeat
+  // background-color rgb(23, 21, 26)
+  background-color rgb(41, 49, 52)
   font-family "微软雅黑", "HelveticaNeue-Light", "Helvetica Neue Light",  "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", "sans-serif"
   -webkit-font-smoothing antialiased
   -webkit-tap-highlight-color rgba(0,0,0,0)
@@ -40,14 +42,11 @@ body
 .register-wrap 
   display none
 
-// .login-wrap
-//   display none
-  
 .login-wrap
   .user-photo 
     display block
-    width 100px
-    height 100px
+    width 90px
+    height 90px
     border-radius 50%
     border 1px solid rgba(0, 0, 0, 0.7)
     margin 0 auto
@@ -64,6 +63,7 @@ body
     color #fff
     background-color rgb(41, 49, 52)
   .icon
+    border-radius 50%
     width 54px
     height 54px
     display inline-block
@@ -84,6 +84,7 @@ body
     .icon
       background-image url('/static/images/home/pass-icon.png')
   .login-btn
+    border-radius 50%
     background-image url('/static/images/home/login-btn.png')
     height 54px
     width 54px
