@@ -26,6 +26,10 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
+var _typeof2 = require('babel-runtime/helpers/typeof');
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
 var _base = require('./base.js');
 
 var _base2 = _interopRequireDefault(_base);
@@ -34,6 +38,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var sockets = {};
 var uid_arr = [];
+
+function deepClone(obj) {
+  if (!obj || (typeof obj === 'undefined' ? 'undefined' : (0, _typeof3.default)(obj)) !== "object" || typeof obj == 'function') {
+    return obj;
+  }
+  var res = Array.isArray(obj) ? [] : obj.constructor ? new obj.constructor() : {};
+  for (var key in obj) {
+    res[key] = deepClone(obj[key]);
+  }
+  return res;
+}
 
 var _class = function (_Base) {
   (0, _inherits3.default)(_class, _Base);
@@ -308,7 +323,7 @@ var _class = function (_Base) {
 
   _class.prototype.getmsgAction = function () {
     var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee6(self) {
-      var http, socket, msg, target_socket;
+      var http, socket, msg, log, target_socket;
       return _regenerator2.default.wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
@@ -316,8 +331,11 @@ var _class = function (_Base) {
               http = self.http;
               socket = http.socket;
               msg = http.data;
+              log = deepClone(msg.data);
 
-
+              delete log.name;
+              delete log.photo;
+              savelog(msg.other, msg.data.uid, log);
               msg.data.to = msg.other;
               if (msg.other == "group") {
                 self.broadcast("newlog", msg.data);
@@ -329,11 +347,8 @@ var _class = function (_Base) {
                   target_socket.emit("newlog", msg.data);
                 }
               }
-              delete msg.data.name;
-              delete msh.data.photo;
-              savelog(msg.other, msg.data.uid, msg.data);
 
-            case 8:
+            case 9:
             case 'end':
               return _context6.stop();
           }

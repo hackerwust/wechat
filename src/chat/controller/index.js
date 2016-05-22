@@ -3,6 +3,17 @@
 let sockets = {};
 let uid_arr = [];
 
+function deepClone(obj) {
+  if (!obj || typeof obj !== "object" || typeof obj == 'function') {
+    return obj;
+  }
+  var res = Array.isArray(obj) ? [] : obj.constructor ? new obj.constructor() : {};
+  for (var key in obj) {
+    res[key] = deepClone(obj[key]);
+  }
+  return res;
+}
+
 import Base from './base.js';
 
 export default class extends Base {
@@ -96,7 +107,10 @@ export default class extends Base {
     var http = self.http;
     var socket = http.socket;
     var msg = http.data;
-    
+    var log = deepClone(msg.data);
+    delete log.name;
+    delete log.photo;
+    savelog(msg.other, msg.data.uid, log);
     msg.data.to = msg.other;
     if (msg.other == "group") {
       self.broadcast("newlog", msg.data);
@@ -107,9 +121,6 @@ export default class extends Base {
         target_socket.emit("newlog", msg.data);
       }
     }
-    delete msg.data.name;
-    delete msh.data.photo;
-    savelog(msg.other, msg.data.uid, msg.data);
   }
 
   async changephotoAction(self) {
