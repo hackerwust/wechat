@@ -147,14 +147,20 @@ body
   float left
   margin-left -240px
   border-right 1px solid rgba(0, 0, 0, 0.1)
-  padding-top 40px
-  .friend-nav 
-    font-weight bold
+  padding-top 20px
+  .search
+    width 80%
     box-sizing border-box
-    width 100%
-    color rgb(39, 117, 196)
-    padding 0 0 5px 14px
-    border-bottom 1px solid #ccc
+    outline 0
+    border-radius 5px
+    background-color #fff
+    border 0
+    margin 0 auto
+    height 30px
+    padding 3px 8px
+    font-size 14px
+    display block
+    margin-bottom 20px
   .friends-wrap
     overflow scroll
     .friend
@@ -248,6 +254,9 @@ body
       min-height 22px
       display inline-block
       padding 6px
+    .name
+      display none
+      margin-bottom 2px
   .other
     .log
       padding 8px 0 0 36px
@@ -263,9 +272,18 @@ body
     .photo
       top 0
       right 0
+    .name
+      text-align right
     .content
       background-color rgb(224, 224, 224)
       float right
+
+.group
+  .item
+    .name
+      display block 
+    .log
+      padding-top 2px
 
 .hide
   display none !important

@@ -44,7 +44,9 @@ export default class extends Base {
         var info = await self.user.where({_id: uid}).find();
         photo_hash.set(uid, info);
       }
-      logs[i].photo = photo_hash.get(uid).photo;
+      var user = photo_hash.get(uid);
+      logs[i].photo = user.photo;
+      logs[i].name = user.name;
     }
   }
 
@@ -94,7 +96,7 @@ export default class extends Base {
     var http = self.http;
     var socket = http.socket;
     var msg = http.data;
-    savelog(msg.other, msg.data.uid, msg.data);
+    
     msg.data.to = msg.other;
     if (msg.other == "group") {
       self.broadcast("newlog", msg.data);
@@ -105,6 +107,9 @@ export default class extends Base {
         target_socket.emit("newlog", msg.data);
       }
     }
+    delete msg.data.name;
+    delete msh.data.photo;
+    savelog(msg.other, msg.data.uid, msg.data);
   }
 
   async changephotoAction(self) {

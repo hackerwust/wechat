@@ -29,7 +29,7 @@ html
         span.name #{self.name}
         a.btn.logout(href='/chat/index/dologout') 退出
       .friend-list-wrap
-        nav.friend-nav 好友列表
+        input.search(type='text')
         .friends-wrap
           .group.item.active(uid = "group")
             img.photo(src='/static/tmp/photo/group.png')
@@ -46,7 +46,7 @@ html
                 span.log-num.hide 0
 
       .chat-window
-        .chat-log-wrap
+        .chat-log-wrap.group
           if logs && logs.length
             each log in logs
               - var cls = log.uid == self._id ? "item self" : "item other"
@@ -54,6 +54,7 @@ html
                 span.time #{log.time || ""}
                 .log.clearfix
                   img.photo(src= log.photo || '/static/tmp/photo/default.jpg')
+                  span.name #{log.name}
                   p.content #{log.content}
 
         textarea.type-write-wrap(wrap="hard")

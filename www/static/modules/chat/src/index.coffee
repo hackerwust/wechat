@@ -138,13 +138,13 @@ define [
       if data.to == "group" #群消息
         group = friends_wrap.find(".group")
         if group.hasClass("active")
-          chat_log_wrap.append(chat_log_item_tpl(data))
+          chat_log_wrap.addClass("group").append(chat_log_item_tpl(data))
           chat_log_wrap.scrollToLast()
         else
           group.incLogNum() 
       else 
         if source.hasClass("active") 
-          chat_log_wrap.append(chat_log_item_tpl(data))
+          chat_log_wrap.removeClass("group").append(chat_log_item_tpl(data))
           chat_log_wrap.scrollToLast()
         else
           source.incLogNum()
@@ -161,12 +161,14 @@ define [
           self: true
           uid: uid
           time: formatTime(new Date())
+          name: self_info_wrap.find(".name").text()
           photo: photo
           content: val
         chat_log_wrap.append(chat_log_item_tpl(data))
         chat_log_wrap.scrollToLast()
         delete data.self
-        delete data.photo
+        # delete data.photo
+        # delete data.name
         socket.emit("sendmsg", {data: data, other: other_id});
           
     friends_wrap.on "click", ".item", (e)->
@@ -177,6 +179,7 @@ define [
       $.post("/chat/index/getlog", {uid: uid, other: other_id}).always (o)->
         if o && o.status == "success"
           chat_log_wrap.hide().empty()
+          if other_id is "group" then chat_log_wrap.addClass("group") else chat_log_wrap.removeClass("group")
           if o.data && o.data.length
             for item in o.data
               item.self = item.uid == uid
@@ -187,8 +190,22 @@ define [
           self.addClass("active").resetLogNum()
           type_write.val("")
     
+    timer = null
 
-
+    $(".friend-list-wrap .search").on "keyup", (e)->
+      if timer then clearTimeout(timer)
+      self = $(this)
+      timer = setTimeout(()->
+        val = $.trim self.val()
+        reg = new RegExp(val, "i")
+        if val 
+          friends_wrap.find(".item").each ()->
+            name = $(this).find(".name").text()
+            if reg.test(name) then $(this).show() else $(this).hide()
+        else 
+          friends_wrap.find(".item").show()
+      300)
+  
 
       
     

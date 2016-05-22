@@ -129,7 +129,7 @@ var _class = function (_Base) {
 
   _class.prototype.addPhoto = function () {
     var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(logs) {
-      var self, photo_hash, i, len, uid, info;
+      var self, photo_hash, i, len, uid, info, user;
       return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -140,7 +140,7 @@ var _class = function (_Base) {
 
             case 3:
               if (!(i < len)) {
-                _context2.next = 14;
+                _context2.next = 16;
                 break;
               }
 
@@ -160,14 +160,17 @@ var _class = function (_Base) {
               photo_hash.set(uid, info);
 
             case 10:
-              logs[i].photo = photo_hash.get(uid).photo;
+              user = photo_hash.get(uid);
 
-            case 11:
+              logs[i].photo = user.photo;
+              logs[i].name = user.name;
+
+            case 13:
               i++;
               _context2.next = 3;
               break;
 
-            case 14:
+            case 16:
             case 'end':
               return _context2.stop();
           }
@@ -314,7 +317,7 @@ var _class = function (_Base) {
               socket = http.socket;
               msg = http.data;
 
-              savelog(msg.other, msg.data.uid, msg.data);
+
               msg.data.to = msg.other;
               if (msg.other == "group") {
                 self.broadcast("newlog", msg.data);
@@ -326,8 +329,11 @@ var _class = function (_Base) {
                   target_socket.emit("newlog", msg.data);
                 }
               }
+              delete msg.data.name;
+              delete msh.data.photo;
+              savelog(msg.other, msg.data.uid, msg.data);
 
-            case 6:
+            case 8:
             case 'end':
               return _context6.stop();
           }
