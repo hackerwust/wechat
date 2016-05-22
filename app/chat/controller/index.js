@@ -2,6 +2,10 @@
 
 exports.__esModule = true;
 
+var _map = require('babel-runtime/core-js/map');
+
+var _map2 = _interopRequireDefault(_map);
+
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -28,7 +32,6 @@ var _base2 = _interopRequireDefault(_base);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var fs = require("fs");
 var sockets = {};
 var uid_arr = [];
 
@@ -281,40 +284,182 @@ var _class = function (_Base) {
     return getmsgAction;
   }();
 
-  _class.prototype.getlogAction = function () {
+  _class.prototype.changephotoAction = function () {
     var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee6(self) {
-      var http, uid, other_id, logs;
+      var http, photo, uid, path, row;
       return _regenerator2.default.wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
-              _context6.prev = 0;
+              http = self.http;
+              photo = http.file("photo");
+              uid = parseInt(http.post("uid"), 10) || 0;
+
+              if (!(think.isEmpty(photo) || !uid)) {
+                _context6.next = 5;
+                break;
+              }
+
+              return _context6.abrupt('return', http.json({ status: "failed", reason: "图片传输失败或者uid为空" }));
+
+            case 5:
+              _context6.next = 7;
+              return savePhoto(photo.path, uid);
+
+            case 7:
+              path = _context6.sent;
+
+              if (!path) {
+                _context6.next = 17;
+                break;
+              }
+
+              _context6.next = 11;
+              return self.user.where({ _id: uid }).update({ photo: path });
+
+            case 11:
+              row = _context6.sent;
+
+              if (!(row >= 0)) {
+                _context6.next = 14;
+                break;
+              }
+
+              return _context6.abrupt('return', http.json({ status: "success", path: path }));
+
+            case 14:
+              return _context6.abrupt('return', http.json({ status: "failed", reason: "数据库更新失败" }));
+
+            case 17:
+              return _context6.abrupt('return', http.json({ status: "failed", reason: "保存失败" }));
+
+            case 18:
+            case 'end':
+              return _context6.stop();
+          }
+        }
+      }, _callee6, this);
+    }));
+
+    function changephotoAction(_x6) {
+      return ref.apply(this, arguments);
+    }
+
+    return changephotoAction;
+  }();
+
+  _class.prototype.saveAction = function () {
+    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee7(self) {
+      var http, name, pass, uid, row;
+      return _regenerator2.default.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              http = self.http;
+              name = http.post("name");
+              pass = http.post("pass");
+              uid = parseInt(http.post("uid"), 10) || 0;
+
+              if (uid) {
+                _context7.next = 6;
+                break;
+              }
+
+              return _context7.abrupt('return', http.json({ status: "failed", reason: "uid为空" }));
+
+            case 6:
+              _context7.next = 8;
+              return self.user.where({ _id: uid }).update({ name: name, pass: pass });
+
+            case 8:
+              row = _context7.sent;
+
+              if (!(row >= 0)) {
+                _context7.next = 13;
+                break;
+              }
+
+              return _context7.abrupt('return', http.json({ status: "success" }));
+
+            case 13:
+              return _context7.abrupt('return', http.json({ status: "failed", reason: "数据库更新失败" }));
+
+            case 14:
+            case 'end':
+              return _context7.stop();
+          }
+        }
+      }, _callee7, this);
+    }));
+
+    function saveAction(_x7) {
+      return ref.apply(this, arguments);
+    }
+
+    return saveAction;
+  }();
+
+  _class.prototype.getlogAction = function () {
+    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee8(self) {
+      var http, uid, other_id, logs, photo_hash, i, len, info;
+      return _regenerator2.default.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
               http = self.http;
               uid = http.post("uid");
               other_id = http.post("other");
               // other_id 在前， 可能是group
 
-              _context6.next = 6;
+              _context8.next = 5;
               return getlog(other_id, uid);
 
-            case 6:
-              logs = _context6.sent;
-              return _context6.abrupt('return', http.json({ status: "success", data: logs }));
+            case 5:
+              logs = _context8.sent;
+              photo_hash = new _map2.default();
+              i = 0, len = logs.length;
 
-            case 10:
-              _context6.prev = 10;
-              _context6.t0 = _context6['catch'](0);
-              return _context6.abrupt('return', http.json({ status: "failed" }));
+            case 8:
+              if (!(i < len)) {
+                _context8.next = 19;
+                break;
+              }
+
+              uid = logs[i].uid;
+
+              if (photo_hash.has(uid)) {
+                _context8.next = 15;
+                break;
+              }
+
+              _context8.next = 13;
+              return self.user.where({ _id: uid }).find();
 
             case 13:
+              info = _context8.sent;
+
+              photo_hash.set(uid, info);
+
+            case 15:
+              logs[i].photo = photo_hash.get(uid).photo;
+
+            case 16:
+              i++;
+              _context8.next = 8;
+              break;
+
+            case 19:
+              return _context8.abrupt('return', http.json({ status: "success", data: logs }));
+
+            case 20:
             case 'end':
-              return _context6.stop();
+              return _context8.stop();
           }
         }
-      }, _callee6, this, [[0, 10]]);
+      }, _callee8, this);
     }));
 
-    function getlogAction(_x6) {
+    function getlogAction(_x8) {
       return ref.apply(this, arguments);
     }
 

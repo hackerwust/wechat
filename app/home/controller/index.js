@@ -134,41 +134,39 @@ var _class = function (_Base) {
     return adduserAction;
   }();
 
-  _class.prototype.dologinAction = function () {
+  _class.prototype.getphotoAction = function () {
     var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(self) {
-      var http, id, pass, uinfo;
+      var http, uid, info;
       return _regenerator2.default.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               http = self.http;
-              id = parseInt(http.post("id"), 10) || 0;
-              pass = http.post("pass");
+              uid = parseInt(http.get('uid'), 10) || 0;
 
-              if (!(!id || !pass)) {
-                _context3.next = 5;
+              if (uid) {
+                _context3.next = 4;
                 break;
               }
 
-              return _context3.abrupt('return', http.json({ status: 'failed', reason: "用户名或者密码为空" }));
+              return _context3.abrupt('return', http.json({ status: "failed" }));
 
-            case 5:
-              _context3.next = 7;
-              return self.user.where({ _id: id, pass: pass }).find();
+            case 4:
+              _context3.next = 6;
+              return self.user.where({ _id: uid }).field("photo").find();
 
-            case 7:
-              uinfo = _context3.sent;
+            case 6:
+              info = _context3.sent;
 
-              if (!(think.isEmpty(uinfo) || uinfo._id != id)) {
-                _context3.next = 10;
+              if (!(info && info.photo)) {
+                _context3.next = 11;
                 break;
               }
 
-              return _context3.abrupt('return', http.json({ status: 'failed', reason: "未匹配到用户" }));
+              return _context3.abrupt('return', http.json({ status: "success", path: info.photo }));
 
-            case 10:
-              this.cookie("uid", uinfo._id);
-              return _context3.abrupt('return', http.json({ status: "success", info: uinfo }));
+            case 11:
+              return _context3.abrupt('return', http.json({ status: 'failed' }));
 
             case 12:
             case 'end':
@@ -178,33 +176,50 @@ var _class = function (_Base) {
       }, _callee3, this);
     }));
 
-    function dologinAction(_x2) {
+    function getphotoAction(_x2) {
       return ref.apply(this, arguments);
     }
 
-    return dologinAction;
+    return getphotoAction;
   }();
 
-  _class.prototype.getAutoId = function () {
-    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(col_name) {
-      var num = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
-      var auto;
+  _class.prototype.dologinAction = function () {
+    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(self) {
+      var http, id, pass, uinfo;
       return _regenerator2.default.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              _context4.next = 2;
-              return this.auto_inc.where({ _id: col_name }).increment("push_id", num);
+              http = self.http;
+              id = parseInt(http.post("id"), 10) || 0;
+              pass = http.post("pass");
 
-            case 2:
-              _context4.next = 4;
-              return this.auto_inc.where({ _id: col_name }).find();
+              if (!(!id || !pass)) {
+                _context4.next = 5;
+                break;
+              }
 
-            case 4:
-              auto = _context4.sent;
-              return _context4.abrupt('return', auto.push_id ? auto.push_id : null);
+              return _context4.abrupt('return', http.json({ status: 'failed', reason: "用户名或者密码为空" }));
 
-            case 6:
+            case 5:
+              _context4.next = 7;
+              return self.user.where({ _id: id, pass: pass }).find();
+
+            case 7:
+              uinfo = _context4.sent;
+
+              if (!(think.isEmpty(uinfo) || uinfo._id != id)) {
+                _context4.next = 10;
+                break;
+              }
+
+              return _context4.abrupt('return', http.json({ status: 'failed', reason: "未匹配到用户" }));
+
+            case 10:
+              this.cookie("uid", uinfo._id);
+              return _context4.abrupt('return', http.json({ status: "success", info: uinfo }));
+
+            case 12:
             case 'end':
               return _context4.stop();
           }
@@ -212,7 +227,41 @@ var _class = function (_Base) {
       }, _callee4, this);
     }));
 
-    function getAutoId(_x3, _x4) {
+    function dologinAction(_x3) {
+      return ref.apply(this, arguments);
+    }
+
+    return dologinAction;
+  }();
+
+  _class.prototype.getAutoId = function () {
+    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee5(col_name) {
+      var num = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
+      var auto;
+      return _regenerator2.default.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.next = 2;
+              return this.auto_inc.where({ _id: col_name }).increment("push_id", num);
+
+            case 2:
+              _context5.next = 4;
+              return this.auto_inc.where({ _id: col_name }).find();
+
+            case 4:
+              auto = _context5.sent;
+              return _context5.abrupt('return', auto.push_id ? auto.push_id : null);
+
+            case 6:
+            case 'end':
+              return _context5.stop();
+          }
+        }
+      }, _callee5, this);
+    }));
+
+    function getAutoId(_x4, _x5) {
       return ref.apply(this, arguments);
     }
 

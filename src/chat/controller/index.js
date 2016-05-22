@@ -1,6 +1,5 @@
 'use strict';
 
-let fs = require("fs");
 let sockets = {};
 let uid_arr = [];
 
@@ -94,17 +93,57 @@ export default class extends Base {
     }
   }
 
-  async getlogAction(self) {
-    try {
-      var http = self.http;
-      var uid = http.post("uid");
-      var other_id = http.post("other");
-      // other_id 在前， 可能是group
-      var logs = await getlog(other_id, uid);
-      return http.json({status: "success", data: logs});
-    } catch (e) {
-      return http.json({status: "failed"});
+  async changephotoAction(self) {
+    var http = self.http;
+    var photo = http.file("photo");
+    var uid = parseInt(http.post("uid"), 10) || 0;
+    if (think.isEmpty(photo) || !uid) {
+      return http.json({status: "failed", reason: "图片传输失败或者uid为空"});
     }
+    var path = await savePhoto(photo.path, uid);
+    if (path) {
+      var row = await self.user.where({_id: uid}).update({photo: path});
+      if (row >= 0) {
+        return http.json({status: "success", path: path});
+      }
+      return http.json({status: "failed", reason: "数据库更新失败"});
+    } else {
+      return http.json({status: "failed", reason: "保存失败"});
+    }
+  }
+
+  async saveAction(self) {
+    var http = self.http;
+    var name = http.post("name");
+    var pass = http.post("pass");
+    var uid = parseInt(http.post("uid"), 10) || 0;
+    if (!uid) {
+      return http.json({status: "failed", reason: "uid为空"});
+    }
+    var row = await self.user.where({_id: uid}).update({name: name, pass: pass});
+    if (row >= 0) {
+      return http.json({status: "success"});
+    } else {
+      return http.json({status: "failed", reason: "数据库更新失败"});
+    }
+  }
+
+  async getlogAction(self) {
+    var http = self.http;
+    var uid = http.post("uid");
+    var other_id = http.post("other");
+    // other_id 在前， 可能是group
+    var logs = await getlog(other_id, uid);
+    var photo_hash = new Map();
+    for (var i = 0, len = logs.length; i < len; i++) {
+      var uid = logs[i].uid;
+      if (!photo_hash.has(uid)) {
+        var info = await self.user.where({_id: uid}).find();
+        photo_hash.set(uid, info);
+      }
+      logs[i].photo = photo_hash.get(uid).photo;
+    }
+    return http.json({status: "success", data: logs});
   }
   
 }

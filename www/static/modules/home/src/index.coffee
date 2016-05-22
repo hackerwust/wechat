@@ -85,6 +85,19 @@ define [
       $(this).css("borderColor", color)
       if id && pass then return msg.text("")
 
+    getphoto = ()->
+      photo = $(".login-wrap .user-photo")
+      id_input = $(".login-wrap .id")
+      uid = $.trim id_input.val()
+      if !uid then return
+      $.get("/home/index/getphoto?uid=#{uid}").always (o)->
+        if o && o.status is "success" && o.path
+          photo.prop("src", o.path)
+        else 
+          photo.prop("src", "/static/tmp/photo/default.jpg")
+
+    login_wrap.on "keyup", ".id", throttle(getphoto)
+
     login_wrap.on "click", ".login-btn", (e)->
       id = login_wrap.find(".id")
       pass = login_wrap.find(".pass")

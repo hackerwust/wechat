@@ -2,4 +2,4 @@ node_modules
 */runtime/*
 */.DS_Store
 www/static
-
+runtime/

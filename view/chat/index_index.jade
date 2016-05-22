@@ -14,8 +14,18 @@ html
 
   body
     .container
+      .self-info-edit-wrap.hide
+        .btn.close-btn x
+        .photo-wrap 
+          input.photo-file.hide(type='file')
+          img.photo(src = self.photo?self.photo:'/static/tmp/photo/default.jpg', _src = self.photo?self.photo:'/static/tmp/photo/default.jpg')
+        .info
+          input.name(type = "text", value = self.name || "", default = self.name || "")
+          input.pass(type = "text", value = self.pass || "", default = self.pass || "")
+          .btn.save 保存
+          .remind-msg
       .self-info-wrap(uid = self._id) 
-        img.photo(src =self.photo?self.photo:'/static/tmp/photo/default.jpg')
+        img.photo(src = self.photo?self.photo:'/static/tmp/photo/default.jpg')
         span.name #{self.name}
         a.btn.logout(href='/chat/index/dologout') 退出
       .friend-list-wrap

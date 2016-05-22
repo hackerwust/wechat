@@ -34,6 +34,20 @@ export default class extends Base {
       http.json({status: "failed", reason: "用户创建失败"});
     }
   }
+
+  async getphotoAction(self) {
+    var http = self.http;
+    var uid = parseInt(http.get('uid'), 10) || 0;
+    if (!uid) {
+      return http.json({status: "failed"});
+    }
+    var info = await self.user.where({_id: uid}).field("photo").find();
+    if (info && info.photo) {
+      return http.json({status: "success", path: info.photo});
+    } else {
+      return http.json({status: 'failed'});
+    }
+  }
   
   async dologinAction(self) {
     var http = self.http;

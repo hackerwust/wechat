@@ -47,7 +47,7 @@ global.getlog = async function(str1, str2) {
     var filename = path.join(think.ROOT_PATH, "www/static/tmp/chatlog", name + ".json");
     fs.readFile(filename, function(err, data) {
       if (err) {
-        resolve(null);
+        resolve([]);
       } else {
         data = "[" + data.toString("utf8").slice(0, -1) + "]";
         data = parseJson(data);
@@ -82,4 +82,33 @@ global.formatTime = function(date, fmt = "M月dd日 hh:mm") {
     if(new RegExp("("+ k +")").test(fmt))   
   fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
   return fmt;   
+};
+
+global.savePhoto = async function(filename, uid) {
+  return new Promise(function(resolve, reject) {
+    try {
+      uid = typeof uid == "string" ? uid : uid.toString();
+      var sha1 = crypto.createHash("sha1");
+      sha1.update(uid);
+      var str = sha1.digest('hex');
+      var extname = path.extname(filename);
+      var filepath = path.join(think.ROOT_PATH, "www/static/tmp/photo", str + extname);
+      var rs = fs.createReadStream(filename);
+      var ws = fs.createWriteStream(filepath);
+      rs.on("data", function(chunk) {
+        if (ws.write(chunk) == false) {
+          rs.pause();
+        }
+      });
+      ws.on("drain", function() {
+        rs.resume()
+      });
+      rs.on("end", function() {
+        ws.end();
+        resolve(`/static/tmp/photo/${str}${extname}`);
+      });
+    } catch (e) {
+      resolve(null);
+    }
+  }); 
 };
