@@ -1,5 +1,5 @@
 node_modules
-*/runtime/*
-*/.DS_Store
+**/runtime/**
+**/.DS_Store
 www/static/tmp/chatlog
 runtime/
