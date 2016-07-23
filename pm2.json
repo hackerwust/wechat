@@ -1,16 +1,25 @@
-{
+{  
+   /*每次更改该文件需要pm2 update(更新)*/
+
+   // cli方式
+   //pm2 start app.js --name 'updst' --node-args="--harmony" --watch .,controllers
   "apps": [{
-    "name": "chat",
+    "name": "wechat",
     "script": "www/production.js",
     "cwd": "/Users/a/Documents/chat",
-    "exec_mode": "cluster",
-    "instances": 0,
+    // "exec_mode": "cluster",
+    // "instances": 0, //
     "max_memory_restart": "1G",
     "autorestart": true,
-    "node_args": [],
-    "args": [],
+    // "node_args": ["harmony"],
+    "watch": true,
+    // "args": [],
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "error_file": "/Users/a/Documents/chat/logs/chat.error.log",
+    "out_file": "/Users/a/Documents/chat/logs/chat.out.log",
     "env": {
-      
+      "NODE_ENV": "production",
+      "ID": "99"
     }
   }]
 }
