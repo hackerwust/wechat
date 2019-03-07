@@ -1,19 +1,11 @@
+# wechat
 
-Application created by [ThinkJS](http://www.thinkjs.org)
-## Install dependencies
+### Description
 
-```
-npm install
-```
+基于thinkjs、mongodb， socket.io搭建的多人在线聊天室
 
-```
-npm start
-```
-
-## Deploy with pm2
-
-Use pm2 to deploy app on production enviroment.
-
-```
-pm2 startOrReload pm2.json
-```
+### Run
+1.本地安装mongo
+2.npm instal
+3.npm start
+4.访问http://localhost:5556
